@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+    mariadb:
+        image: mariadb:latest
+        container_name: mariadb
+        restart: always
+        environment:
+            MYSQL_DATABASE: "root"
+            MYSQL_ROOT_PASSWORD: "212224236"
+            MYSQL_ROOT_HOST: "%"
+        volumes:
+            - ./mariadb\initdb:/docker-entrypoint-initdb.d
+            - ./mariadb\data:/var/lib/mysql
+            - ./mariadb\config:/etc/mysql/conf.d
+        command:
+            mysqld --innodb-flush-method=littlesync --innodb-use-native-aio=OFF --log_bin=ON
+        ports:
+            - "3310:3306"
+volumes:
+    mariadb_data:
